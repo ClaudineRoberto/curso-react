@@ -1,10 +1,15 @@
-import { EmojiRating } from "./components/EmojiRating";
+
+import React from "react";
+import { StudentTable } from "./components/StudentTable";
+import { students } from "./data/students";
 
 const Page = () => {
   return (
-    <div className="bg-gradient-to-br from-blue-500 to-blue-950 text-white w-screen h-screen flex items-center justify-center">
-      <EmojiRating rate={3.45} />
+    <div className="container mx-auto">
+      <h1 className="text-5xl mb-5">Lista de estudantes</h1>
+      <StudentTable students={students} />  
     </div>
+    
   );
 };
 
