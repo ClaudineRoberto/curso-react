@@ -15,10 +15,6 @@ export const Question = ({ id, question, options, selectedOption, setSelectedOpt
 
     
 
-    const handleClick = (id: number) => {
-        setSelectedOption(id)
-    }
-
     return (
         <div className="">
             <div className="py-4 px-3 text-xl font-bold">{id}- {question}</div>
@@ -33,7 +29,7 @@ export const Question = ({ id, question, options, selectedOption, setSelectedOpt
                     
                     <div key={option.id} 
                     className={`py-2 border mx-3 my-4 border-blue-300 ${bgColor} cursor-pointer px-3 rounded`}
-                    onClick={() => handleClick(option.id)}
+                    onClick={() => setSelectedOption(option.id)}
                     >
                         
                         {option.option}
