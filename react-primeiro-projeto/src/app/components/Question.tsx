@@ -1,18 +1,19 @@
-import { useState } from "react";
-import { questions } from "../data/questions";
+import { SetStateAction, useState } from "react";
 import { Option } from "../types/Question";
 
 type Props = {
     id: number;
     question: string;
     options: Option[];
+    selectedOption: number
+    setSelectedOption: React.Dispatch<React.SetStateAction<number>>
 }
 
 
 
-export const Question = ({ id, question, options }: Props) => {
+export const Question = ({ id, question, options, selectedOption, setSelectedOption }: Props) => {
 
-    const [selectedOption, setSelectedOption] = useState(0)
+    
 
     const handleClick = (id: number) => {
         setSelectedOption(id)
