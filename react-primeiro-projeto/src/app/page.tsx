@@ -1,17 +1,24 @@
 "use client"
 
+import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
-import { LoggedUserContext, LoggedUserProvider } from "./contexts/LoggedUser";
+import { PostList } from "./components/PostList";
+import { PostProvider } from "./contexts/PostContext";
+
 
 
 const Page = () => {
 
- 
+
   return (
     <div className="container mx-auto">
-      <LoggedUserProvider>
+
+      <PostProvider>
         <Header />
-      </LoggedUserProvider>
+        <PostList />
+        <Footer />
+      </PostProvider>
+
     </div>
   );
 };

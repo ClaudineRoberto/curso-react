@@ -1,35 +1,41 @@
-import { useContext } from "react";
-import { LoggedUserContext } from "../contexts/LoggedUser";
+import { useContext, useState } from "react";
+import { PostContext } from "../contexts/PostContext";
 
 export const Header = () => {
-    const loggedUserCtx = useContext(LoggedUserContext);
 
-    const handleLogout = () => {
-        loggedUserCtx?.setName('');
-    }
+    const postCtx = useContext(PostContext);
+    const [titleInput, setTitleInput] = useState('');
+    const [bodyInput, setBodyInput] = useState('');
 
-    const handleLogin = () => {
-        loggedUserCtx?.setName('Claudine');
-    }
+    const handleAddPost = () => {
+        postCtx?.addPost(titleInput, bodyInput);
+        setTitleInput('');
+        setBodyInput('');
+    };
 
     return(
-        <div>
-            <h1>Exercícios de Contexts para usuarios logados</h1>
-            {loggedUserCtx?.name &&
-                <>
-                <p>Usuário logado: {loggedUserCtx.name}</p>
-                <button className="bg-blue-500 rounded-md p-3 my-3" onClick={handleLogout}>SAIR</button>
-                </>
-            }
+        <header>
+            <h1 className="text-4xl font-bold">Meu Blog</h1>
 
-            {
-                !loggedUserCtx?.name &&
-                <>
-                <p>Você não está logado</p>
-                <button className="bg-blue-500 rounded-md p-3 my-3" onClick={handleLogin}>ENTRAR</button>
-                </>
-            }
+            <div className="max-w-2xl border border-gray-400 p-3 flex flex-col gap-3 my-5">
 
-        </div>
+                <input type="text" 
+                placeholder="Digite um título" 
+                className="border border-gray-300 p-2 text-black text-xl"
+                value={titleInput}
+                onChange={(e) => setTitleInput(e.target.value)}
+                />
+
+                <textarea 
+                placeholder="Digite um texto" 
+                className="h-36 border border-gray-300 p-2 text-black text-xl"
+                value={bodyInput}
+                onChange={(e) => setBodyInput(e.target.value)}
+                ></textarea>
+
+                <button onClick={ handleAddPost } className=" bg-blue-500 p-3 text-white rounded-md">Adicionar Post</button>
+
+            </div>
+        </header>
     );
-}
+};
