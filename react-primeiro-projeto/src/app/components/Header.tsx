@@ -1,15 +1,35 @@
 import { useContext } from "react";
-import { OnlineUsers } from "./OnlineUsers";
-import { CountContext } from "../contexts/CountContext";
+import { LoggedUserContext } from "../contexts/LoggedUser";
 
 export const Header = () => {
-    const countCtx = useContext(CountContext);
+    const loggedUserCtx = useContext(LoggedUserContext);
 
+    const handleLogout = () => {
+        loggedUserCtx?.setName('');
+    }
 
-    return (
-        <header>
-            <h1 className="text-3xl">Título da página ( {countCtx?.onlineCount} )</h1>
-            <OnlineUsers />
-        </header>
+    const handleLogin = () => {
+        loggedUserCtx?.setName('Claudine');
+    }
+
+    return(
+        <div>
+            <h1>Exercícios de Contexts para usuarios logados</h1>
+            {loggedUserCtx?.name &&
+                <>
+                <p>Usuário logado: {loggedUserCtx.name}</p>
+                <button className="bg-blue-500 rounded-md p-3 my-3" onClick={handleLogout}>SAIR</button>
+                </>
+            }
+
+            {
+                !loggedUserCtx?.name &&
+                <>
+                <p>Você não está logado</p>
+                <button className="bg-blue-500 rounded-md p-3 my-3" onClick={handleLogin}>ENTRAR</button>
+                </>
+            }
+
+        </div>
     );
-};
+}
