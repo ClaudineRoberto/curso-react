@@ -14,9 +14,11 @@ const Page = () => {
     <div className="container mx-auto">
 
       <PostProvider>
+
         <Header />
         <PostList />
         <Footer />
+        
       </PostProvider>
 
     </div>
