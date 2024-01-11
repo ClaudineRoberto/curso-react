@@ -1,24 +1,19 @@
 "use client"
 
-import { Button } from "./components/Button";
-import { Container } from "./components/Container";
-import { ThemeSwitch } from "./components/ThemeSwitch";
-import { ThemeProvider } from "./contexts/ThemeContext";
+import { Chat } from "./components/Chat";
+import { ChatProvider } from "./contexts/ChatContext";
+import { UserProvider } from "./contexts/UserContext";
 
 const page = () => {
     return (
-        <ThemeProvider>
-            <Container>
-              <header className="py-5">
-                <h1 className="text-3xl">Título da página</h1>
-              </header>
-              <section>
-                <p className="my-5">Conteúdo da página</p>
-              </section>
-              <Button label="Clique Aqui" onClick={()=> { }} />
-              <ThemeSwitch />
-            </Container>
-        </ThemeProvider>
+        <div className="container mx-auto max-w-lg px-2">
+          <UserProvider>
+            <ChatProvider>
+              <h1 className=" text-3xl my-3 text-center">Chat</h1>
+              <Chat />
+            </ChatProvider>
+          </UserProvider>
+        </div>
     );
 }
 
