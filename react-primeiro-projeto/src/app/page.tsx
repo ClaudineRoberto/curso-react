@@ -1,17 +1,26 @@
 "use client"
 
 import axios from "axios";
+import { api } from "./utils/api";
 
 const page = () => {
 
   const handleAddPosts = async () => {
-    const response = await axios.post('https://jsonplaceholder.typicode.com/posts',{
+
+    const response = await api.post('/posts',{
       title: 'Novo Post',
       body: 'Corpo do Post',
       userId: 1
-    })
+    });
 
-    console.log(response.data)
+
+    if(response.data.id){
+      console.log('Post inserido com sucesso')
+      
+    }else {
+      console.log('Erro ao inserir post')
+    
+    }
   }
 
   return (
