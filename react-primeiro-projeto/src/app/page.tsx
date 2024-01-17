@@ -1,31 +1,36 @@
 "use client"
 
 import axios from "axios";
-import { api } from "./utils/api";
+import { useRef } from "react";
 
 const page = () => {
 
-  const handleAddPosts = async () => {
+  const fileInput = useRef<HTMLInputElement>(null);
+  const handleSendFile = async () => {
+    if (fileInput.current?.files && fileInput.current?.files.length > 0){
 
-    const response = await api.post('/posts',{
-      title: 'Novo Post',
-      body: 'Corpo do Post',
-      userId: 1
-    });
+      const file = fileInput.current.files[0];
 
+      const data = new FormData();
+      data.append('name', 'Dinei')
+      data.append('file', file);
 
-    if(response.data.id){
-      console.log('Post inserido com sucesso')
+      const response = await axios.post ('https://jsonplaceholder.typicode.com/posts', data)
+      console.log(response.data);
       
-    }else {
-      console.log('Erro ao inserir post')
-    
     }
   }
 
   return (
         <div className="container mx-auto">
-          <button onClick={handleAddPosts}>Inserir Post</button>
+
+          <input 
+          ref={fileInput} 
+          type="file"
+          />
+
+          <button onClick={handleSendFile}>Enviar</button>
+
         </div>
     );
 }
