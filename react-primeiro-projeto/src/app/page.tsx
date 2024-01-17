@@ -1,36 +1,29 @@
 "use client"
-
 import axios from "axios";
-import { useRef } from "react";
+
 
 const page = () => {
 
-  const fileInput = useRef<HTMLInputElement>(null);
-  const handleSendFile = async () => {
-    if (fileInput.current?.files && fileInput.current?.files.length > 0){
+  const controler = new AbortController();
 
-      const file = fileInput.current.files[0];
-
-      const data = new FormData();
-      data.append('name', 'Dinei')
-      data.append('file', file);
-
-      const response = await axios.post ('https://jsonplaceholder.typicode.com/posts', data)
-      console.log(response.data);
-      
+  const handleStartRequest = async () => {
+    try{
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+          signal: controler.signal
+        });
+    } catch(error){
+      console.log('Deu algum problema...')
     }
   }
 
+  const handleCancelRequest = () => {
+    controler.abort();
+  }
+
   return (
-        <div className="container mx-auto">
-
-          <input 
-          ref={fileInput} 
-          type="file"
-          />
-
-          <button onClick={handleSendFile}>Enviar</button>
-
+        <div className="container mx-auto flex gap-3 mt-4">
+            <button onClick={handleStartRequest} className="border border-white rounded-md px-3 py-4">Fazer requisição</button>
+            <button onClick={handleCancelRequest} className="border border-white rounded-md px-3 py-4">Cancelar requisição</button>
         </div>
     );
 }
