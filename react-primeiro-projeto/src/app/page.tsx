@@ -2,13 +2,13 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Posts } from "./types/Posts";
+import { Post } from "./types/Post";
 
 const page = () => {
 
   const query = useQuery({
     queryKey: ['posts'],
-    queryFn: async (): Promise<Posts[]> => {
+    queryFn: async (): Promise<Post[]> => {
       const result = await axios.get('https://jsonplaceholder.typicode.com/posts');
       return result.data;
     }
