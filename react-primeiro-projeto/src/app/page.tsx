@@ -1,35 +1,23 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { Post } from "./types/Post";
+import { usePosts } from "./utils/queries";
 
 const page = () => {
 
-  const query = useQuery({
-    queryKey: ['posts'],
-    queryFn: async (): Promise<Post[]> => {
-      const result = await axios.get('https://jsonplaceholder.typicode.com/posts');
-      return result.data;
-    }
-  });
-
-
+ const posts = usePosts();
 
     return (
         <div className="container mx-auto">
           <h1 className="text-white text-3xl">Lista de posts</h1>
-          {query.isLoading && <p className="text-white">Carregando...</p>}
+          {posts.isLoading && <p className="text-white">Carregando...</p>}
 
-          {query.data &&
+          {posts.data &&
             <ul>
-              {query.data.map(item => (
+              {posts.data.map(item => (
                 <li key={item.id} className="text-white">{item.title}</li>
               ))}
             </ul>
           }
-          
-
         </div>
     );
 }
