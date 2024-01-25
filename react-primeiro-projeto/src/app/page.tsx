@@ -4,11 +4,10 @@ import { useState } from "react";
 import { usePosts } from "./utils/queries";
 
 const page = () => {
-
   const limit = 3;
   const [page, setPage] = useState(0);
   
- const posts = usePosts();
+ const posts = usePosts(limit, page * limit);
 
  const handleNextButton = () => {
   setPage(page + 1)
@@ -32,7 +31,6 @@ const page = () => {
           
 
           {posts.isLoading && <p className="text-white">Carregando...</p>}
-          {!posts.isLoading && posts.isFetching && <p className="text-white">Está recarregando...</p>}
 
           {posts.data &&
             <ul>
