@@ -33,3 +33,9 @@ export const useUserPrefetch = async () => {
         queryFn: getUsers,
     });
 }
+
+export const invalidadePosts = () => {
+    queryClient.invalidateQueries({
+        queryKey: ['posts']
+    });
+}
