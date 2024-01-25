@@ -5,7 +5,6 @@ export const usePosts = (limit: number, start: number) => {
     const query = useQuery({
         queryKey: ['posts', { limit, start }],
         queryFn: () => getPosts(limit, start),
-        placeholderData: keepPreviousData,
         staleTime: Infinity,
     })
     return query;
