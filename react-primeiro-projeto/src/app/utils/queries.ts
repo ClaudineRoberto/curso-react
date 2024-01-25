@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
 import { getPost, getPosts } from "./api"
 
-export const usePosts = (enabled?: boolean) => {
+export const usePosts = () => {
     const query = useQuery({
         queryKey: ['posts'],
         queryFn: getPosts,
-        staleTime: Infinity,
-        enabled: enabled,
+        staleTime: Infinity
     })
     return query;
 }
