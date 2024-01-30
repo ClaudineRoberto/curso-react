@@ -1,28 +1,13 @@
 "use client"
 
-import { useMutation } from "@tanstack/react-query";
 import { usePosts } from "./utils/queries";
-import { addPost } from "./utils/api";
+import { useAddPost } from "./utils/mutations";
 
 const page = () => {
  
   const posts = usePosts();
 
-  const addMutation = useMutation({
-    mutationFn: addPost,
-    onMutate: (data) => {
-      console.log("onMutate", data);
-    },
-    onError: (error, data, context) => {
-
-    },
-    onSuccess: (retorno, data, context) => {
-
-    },
-    onSettled: (retorno, error, data, context) => {
-
-    }
-  });
+  const addPost = useAddPost();
 
   const handleAddButton = async () => {
     const data = {
@@ -31,10 +16,7 @@ const page = () => {
       userId: 1
     };
 
-    const retorno = await addMutation.mutateAsync(data);
-    console.log('Deu tudo certo!');
-
-    console.log('Executado depois do mutate');
+    addPost.mutate(data);
  }
 
     return (
@@ -44,7 +26,7 @@ const page = () => {
           <div className="border border-white p-3 my-3">
             <p>Adicionar Novo Post</p>
 
-            <p onClick={() => addMutation.reset()}>Status: {addMutation.status}</p>
+            <p onClick={() => addPost.reset()}>Status: {addPost.status}</p>
 
             <button onClick={handleAddButton} className="border border-white rounded-md px-3 py-2 mt-3">Adicionar</button>
           </div>
