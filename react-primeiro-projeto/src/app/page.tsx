@@ -9,7 +9,19 @@ const page = () => {
   const posts = usePosts();
 
   const addMutation = useMutation({
-    mutationFn: addPost
+    mutationFn: addPost,
+    onMutate: (data) => {
+      console.log("onMutate", data);
+    },
+    onError: (error, data, context) => {
+
+    },
+    onSuccess: (retorno, data, context) => {
+
+    },
+    onSettled: (retorno, error, data, context) => {
+
+    }
   });
 
   const handleAddButton = () => {
@@ -26,6 +38,8 @@ const page = () => {
 
           <div className="border border-white p-3 my-3">
             <p>Adicionar Novo Post</p>
+
+            <p onClick={() => addMutation.reset()}>Status: {addMutation.status}</p>
 
             <button onClick={handleAddButton} className="border border-white rounded-md px-3 py-2 mt-3">Adicionar</button>
           </div>
