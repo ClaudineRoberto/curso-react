@@ -24,12 +24,17 @@ const page = () => {
     }
   });
 
-  const handleAddButton = () => {
-    addMutation.mutate({
+  const handleAddButton = async () => {
+    const data = {
       title: "Teste",
       body: "Corpo de Teste",
       userId: 1
-    });
+    };
+
+    const retorno = await addMutation.mutateAsync(data);
+    console.log('Deu tudo certo!');
+
+    console.log('Executado depois do mutate');
  }
 
     return (
