@@ -10,6 +10,7 @@ const page = () => {
   const { 
     control,
     handleSubmit,
+    setValue
   } = useForm<SignUpForm>();
 
   const handleFormSubmit: SubmitHandler<SignUpForm> = (data) => {
@@ -36,7 +37,7 @@ const page = () => {
               control={control}
               name="age"
               rules={{ min: 18, max: 120, required: true}}
-            />
+            />            
 
 
             <input 
@@ -47,6 +48,9 @@ const page = () => {
 
 
           </form>
+
+          <button onClick={() => setValue('age', 18)}>Sou maior de 18</button>
+          
 
         </div>
     );
