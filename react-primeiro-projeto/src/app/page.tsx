@@ -9,7 +9,12 @@ type Inputs = {
 };
 
 const page = () => {
-  const { handleSubmit, register } = useForm<Inputs>();
+
+  const { 
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm<Inputs>();
 
   const handleFormSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
@@ -21,9 +26,9 @@ const page = () => {
           <form onSubmit={handleSubmit(handleFormSubmit)}>
 
             <input 
-            {...register("name", { required: true, minLength: 3, maxLength: 20})} 
-            className="border border-white p-3 mt-3 text-black"
-            placeholder="Digite seu nome"
+              {...register("name", { required: true, minLength: 3, maxLength: 20})} 
+              className={`border ${errors.name ? 'border-red-500 border-2 focus:outline-red-500' : 'border-white'} p-3 mt-3 text-black`}
+              placeholder="Digite seu nome"
             />
 
             <input 
@@ -35,14 +40,14 @@ const page = () => {
             <input 
             {...register("age", { min: 18, max: 120, required: true})} 
             type="number"
-            className="block border border-white p-3 mt-3 text-black"
+            className={`border ${errors.age ? 'border-red-500 border-2 focus:outline-red-500' : 'border-white'} p-3 mt-3 text-black`}
             placeholder="Digite sua idade"
             />
 
             <input 
             type="submit" 
             value="Enviar"
-            className="border border-white py-2 px-3 mt-3 rounded-md cursor-pointer"
+            className=" block border border-white py-2 px-3 mt-3 rounded-md cursor-pointer"
             />
 
 
