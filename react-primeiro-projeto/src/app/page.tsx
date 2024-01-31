@@ -1,45 +1,45 @@
 "use client"
 
-import { usePosts } from "./utils/queries";
-import { useAddPost } from "./utils/mutations";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type Inputs = {
+  name: string,
+  lastName: string,
+};
 
 const page = () => {
- 
-  const posts = usePosts();
+  const { handleSubmit, register } = useForm<Inputs>();
 
-  const addPost = useAddPost();
-
-  const handleAddButton = async () => {
-    const data = {
-      title: "Teste",
-      body: "Corpo de Teste",
-      userId: 1
-    };
-
-    addPost.mutate(data);
- }
+  const handleFormSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+  }
 
     return (
         <div className="container mx-auto">
-          <h1 className="text-white text-3xl">Lista de posts</h1>
+          
+          <form onSubmit={handleSubmit(handleFormSubmit)}>
 
-          <div className="border border-white p-3 my-3">
-            <p>Adicionar Novo Post</p>
+            <input 
+            {...register("name")} 
+            className="border border-white p-3 mt-3 text-black"
+            placeholder="Digite seu nome"
+            />
 
-            <p onClick={() => addPost.reset()}>Status: {addPost.status}</p>
+            <input 
+            {...register("lastName")} 
+            className="block border border-white p-3 mt-3 text-black"
+            placeholder="Digite seu sobrenome"
+            />
 
-            <button onClick={handleAddButton} className="border border-white rounded-md px-3 py-2 mt-3">Adicionar</button>
-          </div>
+            <input 
+            type="submit" 
+            value="Enviar"
+            className="border border-white py-2 px-3 mt-3 rounded-md cursor-pointer"
+            />
 
-          {posts.isLoading && <p className="text-white">Carregando...</p>}
 
-          {posts.data &&
-            <ul>
-              {posts.data.map(item => (
-                <li key={item.id} className="text-white">{item.title}</li>
-              ))}
-            </ul>
-          }
+          </form>
+
         </div>
     );
 }
