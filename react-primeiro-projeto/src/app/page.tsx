@@ -1,22 +1,18 @@
 "use client"
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import { SignUpForm } from "./types/SignUpForm";
+import { Input } from "./components/Input";
 
-type Inputs = {
-  name: string,
-  lastName: string,
-  age: number,
-};
 
 const page = () => {
 
   const { 
+    control,
     handleSubmit,
-    register,
-    formState: { errors }
-  } = useForm<Inputs>();
+  } = useForm<SignUpForm>();
 
-  const handleFormSubmit: SubmitHandler<Inputs> = (data) => {
+  const handleFormSubmit: SubmitHandler<SignUpForm> = (data) => {
     console.log(data);
   }
 
@@ -25,24 +21,23 @@ const page = () => {
           
           <form onSubmit={handleSubmit(handleFormSubmit)}>
 
-            <input 
-              {...register("name", { required: true, minLength: 3, maxLength: 20})} 
-              className={`border ${errors.name ? 'border-red-500 border-2 focus:outline-red-500' : 'border-white'} p-3 mt-3 text-black`}
-              placeholder="Digite seu nome"
+            <Input
+              control={control}
+              name="name"
+              rules={{ required: true, minLength: 3, maxLength: 20}}
             />
 
-            <input 
-            {...register("lastName")} 
-            className="block border border-white p-3 mt-3 text-black"
-            placeholder="Digite seu sobrenome"
+            <Input
+              control={control}
+              name="lastName"
             />
 
-            <input 
-            {...register("age", { min: 18, max: 120, required: true})} 
-            type="number"
-            className={`border ${errors.age ? 'border-red-500 border-2 focus:outline-red-500' : 'border-white'} p-3 mt-3 text-black`}
-            placeholder="Digite sua idade"
+            <Input
+              control={control}
+              name="age"
+              rules={{ min: 18, max: 120, required: true}}
             />
+
 
             <input 
             type="submit" 
