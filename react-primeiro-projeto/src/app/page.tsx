@@ -1,56 +1,36 @@
 "use client"
 
-import { SubmitHandler, useForm } from "react-hook-form";
-import { SignUpForm } from "./types/SignUpForm";
-import { Input } from "./components/Input";
-
+import { Form, useForm } from "react-hook-form";
 
 const page = () => {
 
-  const { 
-    control,
-    handleSubmit,
-    setValue
-  } = useForm<SignUpForm>();
-
-  const handleFormSubmit: SubmitHandler<SignUpForm> = (data) => {
-    console.log(data);
+  const handleSuceess = () => {
+    console.log('Sucesso');
   }
 
+  const handleError = () => {
+    console.log('Erro');
+  }
+
+
+  const { register, control } = useForm();
+
     return (
-        <div className="container mx-auto">
-          
-          <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <div className="container mx-auto mt-6">
+         
+          <Form 
+          control={control} 
+          action={'https://jsonplaceholder.typicode.com/posts'}
+          onSuccess={handleSuceess}
+          onError={handleError}
+          >
 
-            <Input
-              control={control}
-              name="name"
-              rules={{ required: true, minLength: 3, maxLength: 20}}
-            />
+            <input {...register('title', {required: true})} className="border border-white p-3 mr-3 text-black" />
+            <input {...register('body', {required: true})} className="border border-white p-3 mr-3 text-black" />
+            <input {...register('userId', {required: true})} className="border border-white p-3 mr-3 text-black" />
 
-            <Input
-              control={control}
-              name="lastName"
-            />
-
-            <Input
-              control={control}
-              name="age"
-              rules={{ min: 18, max: 120, required: true}}
-            />            
-
-
-            <input 
-            type="submit" 
-            value="Enviar"
-            className=" block border border-white py-2 px-3 mt-3 rounded-md cursor-pointer"
-            />
-
-
-          </form>
-
-          <button onClick={() => setValue('age', 18)}>Sou maior de 18</button>
-          
+            <button>Enviar</button>
+          </Form>
 
         </div>
     );
