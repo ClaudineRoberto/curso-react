@@ -1,59 +1,62 @@
 "use client"
 
-import { SubmitHandler, useForm } from "react-hook-form";
-import { SignUpForm } from "./types/SignUpForm";
-import { Input } from "./components/Input";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod'
+
+
+const SignUpFormSchema = z.object({
+  name: z.string().min(2, 'Mínimo de 2 letras').max(20, 'Máximo de 20 letras'),
+  lastName: z.string().optional(),
+  age: z.number({ invalid_type_error: 'Idade precisa ser um número' }).min(18, 'Idade mínima de 18 anos')
+});
 
 
 const page = () => {
 
-  const { 
-    control,
-    handleSubmit,
-    setValue
-  } = useForm<SignUpForm>();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(SignUpFormSchema)
+  });
 
-  const handleFormSubmit: SubmitHandler<SignUpForm> = (data) => {
-    console.log(data);
+  const handleSignUpForm = () => {
+    alert('Cadastrado com sucesso!');
   }
 
-    return (
-        <div className="container mx-auto">
-          
-          <form onSubmit={handleSubmit(handleFormSubmit)}>
+  return (
+    <div className="container mx-auto">
+      <form onSubmit={handleSubmit(handleSignUpForm)}>
 
-            <Input
-              control={control}
-              name="name"
-              rules={{ required: true, minLength: 3, maxLength: 20}}
-            />
-
-            <Input
-              control={control}
-              name="lastName"
-            />
-
-            <Input
-              control={control}
-              name="age"
-              rules={{ min: 18, max: 120, required: true}}
-            />            
-
-
-            <input 
-            type="submit" 
-            value="Enviar"
-            className=" block border border-white py-2 px-3 mt-3 rounded-md cursor-pointer"
-            />
-
-
-          </form>
-
-          <button onClick={() => setValue('age', 18)}>Sou maior de 18</button>
-          
-
+        <div>
+          <input
+            {...register('name')}
+            className='border border-white text-black p-3 m-3'
+          />
+          {errors.name && <p>{ errors.name.message as string }</p>}
         </div>
-    );
+
+        <div>
+          <input
+            {...register('lastName')}
+            className='border border-white text-black p-3 m-3'
+          />
+          {errors.lastName && <p>{ errors.lastName.message as string }</p>}
+        </div>
+
+        <div>
+          <input
+            {...register('age', { valueAsNumber: true })}
+            className='border border-white text-black p-3 m-3'
+          />
+          {errors.age && <p>{ errors.age.message as string }</p>}
+        </div>
+
+
+        <input type='submit' value='Cadastrar' />
+
+      </form>
+
+    </div>
+  );
 }
 
 export default page;
